@@ -28,6 +28,21 @@ void reset_life(Conway* conway, int percent_fill) {
 }
 
 
+void clear_life(Conway* conway) {
+    for (int i = 0; i < conway->width * conway->height; i++) {
+        conway->grid[i] = 0;
+    }
+}
+
+
+void edit_grid(Conway* conway, int x, int y, int value) {
+    if (!conway) return;
+
+    const int i = (x + y * conway->width);
+    conway->grid[i] = value;
+}
+
+
 void step_life(Conway* conway, Conway* previous_conway, int rows, int cols) {
     const int DIMENSIONS = rows * cols;
 

@@ -93,6 +93,33 @@ void do_panel(int x, int y, int width, int height, Color color) {
     DrawRectangle(x, y, width, height, color);
 }
 
+
+MouseInfo do_draw_grid(int x, int y, int cell_size, int rows, int cols) {
+    const int width = cell_size * cols;
+    const int height = cell_size * rows;
+    const int mouse_x = GetMouseX();
+    const int mouse_y = GetMouseY();
+    const int mouse_offset_x = (((mouse_x - x) / cell_size) % cols) * cell_size + x;
+    const int mouse_offset_y = ((mouse_y - y) / cell_size) * cell_size + y;
+    bool is_mouse_down = false;
+
+    if (do_mouse_aabb(x, y, mouse_x, mouse_y, width, height)) {
+        DrawRectangle(x, y, width, height, (Color){255, 200, 255, 150});
+        DrawRectangle(
+            mouse_offset_x,
+            mouse_offset_y,
+            cell_size, cell_size, (Color){0, 255, 0, 150});
+        is_mouse_down = IsMouseButtonDown(0);
+    }
+
+    return (MouseInfo) {
+        (((mouse_x - x) / cell_size) % cols),
+        ((mouse_y - y) / cell_size),
+        is_mouse_down
+    };
+}
+
+
 void do_grid(int *grid, int x, int y, int rows, int cols, int cell_size) {
     const int border = 16;
     do_panel(x - border/2, y - border/2, cell_size * cols + border, cell_size * rows + border, GRAY);
@@ -104,4 +131,32 @@ void do_grid(int *grid, int x, int y, int rows, int cols, int cell_size) {
 
         DrawRectangle((i % cols) * cell_size + x, (i / rows) * cell_size + y, cell_size, cell_size, color);
     }
+}
+
+
+int do_slider(int *value, int minv, int maxv, int x, int y) {
+    const int mouse_x = GetMouseX();
+    const int mouse_y = GetMouseY();
+
+    DrawRectangle(x, y, maxv, 8, DARKGRAY);
+
+    int newValue = *value;
+
+    Color highlightColor = LIGHTGRAY;
+    if (do_mouse_aabb(x, y, mouse_x, mouse_y, maxv, 8)) {
+        highlightColor = WHITE;
+        if (IsMouseButtonDown(0)) {
+            newValue = mouse_x - x;
+            if (newValue < minv) newValue = 0;
+            if (newValue > maxv) newValue = maxv;
+        }
+    }
+
+    DrawRectangle(newValue + x, y - 4, 16, 16, highlightColor);
+
+    char buffer[16];
+    sprintf(buffer,"%d", newValue);
+    DrawText(buffer, x + maxv + 32, y - 5, 20, WHITE);
+
+    return newValue;
 }
