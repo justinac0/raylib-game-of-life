@@ -14,9 +14,9 @@
 #include <raylib.h>
 
 
-const int GRID_WIDTH = 256;
-const int GRID_HEIGHT = 256;
-const int CELL_SIZE = 2;
+const int GRID_WIDTH = 64;
+const int GRID_HEIGHT = 64;
+const int CELL_SIZE = 8;
 
 
 int main(void) {
@@ -111,19 +111,20 @@ int main(void) {
         EndDrawing();
 
         // Update
-        if (current_time - last_time > 1.0f/update_speed) {
-            if (edit_info.mouse_left_down) {
-                switch (draw_mode) {
-                    case DRAW:
-                        edit_grid(&simulation, edit_info.x, edit_info.y, 1);
-                        break;
-                    case ERASE:
-                        edit_grid(&simulation, edit_info.x, edit_info.y, 0);
-                        break;
-                    default:
-                        break;
-                }
+        if (edit_info.mouse_left_down) {
+            switch (draw_mode) {
+                case DRAW:
+                    edit_grid(&simulation, edit_info.x, edit_info.y, 1);
+                    break;
+                case ERASE:
+                    edit_grid(&simulation, edit_info.x, edit_info.y, 0);
+                    break;
+                default:
+                    break;
             }
+        }
+
+        if (current_time - last_time > 1.0f/update_speed) {
 
             if (is_running) {
                 step_life(&simulation, &simulation_copy, GRID_HEIGHT, GRID_WIDTH);

@@ -104,7 +104,7 @@ MouseInfo do_draw_grid(int x, int y, int cell_size, int rows, int cols) {
     bool is_mouse_down = false;
 
     if (do_mouse_aabb(x, y, mouse_x, mouse_y, width, height)) {
-        DrawRectangle(x, y, width, height, (Color){255, 200, 255, 150});
+        // DrawRectangle(x, y, width, height, (Color){255, 250, 155, 50});
         DrawRectangle(
             mouse_offset_x,
             mouse_offset_y,
