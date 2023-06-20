@@ -1,7 +1,7 @@
 // TODO:
-//  drawing mode
 //  more efficient updating > 512x512 grid sim
 //  mouse controls, drag, pan, etc...
+//  re-write...
 
 #include <stdlib.h>
 #include <stdio.h>
