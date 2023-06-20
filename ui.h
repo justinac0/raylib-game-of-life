@@ -30,7 +30,7 @@ bool do_checkbox(UIContext *context, const char* label, int x, int y);
 void do_panel(int x, int y, int width, int height, Color color);
 MouseInfo do_draw_grid(int x, int y, int cell_size, int rows, int cols);
 void do_grid(int *grid, int x, int y, int rows, int cols, int cell_size);
-int do_slider(int *value, int minv, int maxv, int x, int y);
+int do_slider(int *value, int minv, int maxv, int x, int y, bool* just_changed);
 
 
 #endif // UI_H

@@ -51,8 +51,10 @@ int main(void) {
     camera.zoom = 1.0;
 
     DrawMode draw_mode = NONE;
+    bool slider_changed = false;
     int slider = 25;
     float update_speed = 0;
+
 
     float last_time = GetTime();
 
@@ -102,7 +104,7 @@ int main(void) {
             }
 
             do_text("Update Speed (per second)", 10, 300, 20);
-            slider = do_slider(&slider, 0, 256, 10, 334);
+            slider = do_slider(&slider, 0, 256, 10, 334, &slider_changed);
             update_speed = slider;
         }
 

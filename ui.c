@@ -134,7 +134,7 @@ void do_grid(int *grid, int x, int y, int rows, int cols, int cell_size) {
 }
 
 
-int do_slider(int *value, int minv, int maxv, int x, int y) {
+int do_slider(int *value, int minv, int maxv, int x, int y, bool* just_changed) {
     const int mouse_x = GetMouseX();
     const int mouse_y = GetMouseY();
 
@@ -143,13 +143,18 @@ int do_slider(int *value, int minv, int maxv, int x, int y) {
     int newValue = *value;
 
     Color highlightColor = LIGHTGRAY;
-    if (do_mouse_aabb(x, y, mouse_x, mouse_y, maxv, 8)) {
+    if (do_mouse_aabb(x, y, mouse_x, mouse_y, maxv, 8) | *just_changed) {
         highlightColor = WHITE;
         if (IsMouseButtonDown(0)) {
             newValue = mouse_x - x;
             if (newValue < minv) newValue = 0;
             if (newValue > maxv) newValue = maxv;
+            *just_changed = true;
+        } else {
+            *just_changed = false;
         }
+    } else {
+        *just_changed = false;
     }
 
     DrawRectangle(newValue + x, y - 4, 16, 16, highlightColor);
