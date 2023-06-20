@@ -5,4 +5,5 @@ Simple implementation of conways game of life using raylib. Not efficient, just 
 Run build.bat -- (using raylib provided compiler ect..).
 
 ## Showcase
-![raylib-game-of-life default view](examples/images/defaultview.PNG)
+![raylib-game-of-life default view](examples/demo.gif)
+
